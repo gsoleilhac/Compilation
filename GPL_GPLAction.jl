@@ -1,12 +1,35 @@
-const GPL = "S -> 'begin'.DeclarVar.ListInstr.'end'#25,
+####### TODO #######
+### 
+### 
+### facile : 
+###     Boucle for avec une syntaxe C
+###     Renuméroter les actions dans l'ordre ? osef un peu mais bon...
+### 
+### 
+### moyen : 
+###     !(condition)
+###     condition && condition
+###     condition || condition
+###
+###     parentheser les conditions via une seule regle plutot que forcer 'if'.'(' ...
+###     sans ça c'est chiant pour le !(condition)
+###
+### chaud :
+###     pouvoir gérer ou au moins print des String ?
+###     Faire des fonctions :D
+###
+### 
+
+
+
+const GPL = "S -> 'begin'.DeclarVar.[Instr].'end'#25,
 DeclarVar -> 'int'.DeclarVar2,
 DeclarVar2 -> 'IDENT'#1.[','.'IDENT'#1].';',
-ListInstr -> [Instr],
 Instr -> ('IDENT'#2.'='#3.Expr.';'#4) +
         ('println'.'('.Expr.')'.';'#6) +
-        ('while'.'('#7.Cond.')'#8.'{'.ListInstr.'}'#9) +
-        ('if'.'('.Cond.')'#22.'{'.ListInstr.'}'.Else#24),
-Else -> (/'else'#23.'{'.ListInstr.'}'/),
+        ('while'.'('#7.Cond.')'#8.'{'.Instr.[Instr].'}'#9) +
+        ('if'.'('.Cond.')'#22.'{'.[Instr].'}'.Else#24),
+Else -> (/'else'#23.'{'.[Instr].'}'/),
 Expr -> Expr2.Exprprime,
 Exprprime -> '+'.Expr2#10.Exprprime +
               ['-'.Expr2#11.Exprprime],
@@ -17,7 +40,6 @@ Expr3 -> 'IDENT'#14 +
         'NUMBER'#15 +
         'input()'#27 +
         '('.Expr.')',
-OP -> '*'#12 + '/'#13 + '+'#10 + '-'#11,
 Cond -> Expr.CondSymbol.Expr#16,
 CondSymbol -> '>'#17 + '>='#18 + '<'#19 + '<='#20 + '=='#21,;"
 
