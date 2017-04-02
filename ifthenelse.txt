@@ -1,0 +1,11 @@
+begin
+    int a,b;
+    a = input();
+    if (a < 10) {
+    	println((2 * a));
+    }
+    else
+    {
+    	println(a);
+    }
+end

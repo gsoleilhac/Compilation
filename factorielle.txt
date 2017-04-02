@@ -1,0 +1,10 @@
+begin
+    int a,b,c;
+    a = input();
+    b = 1;
+    while (a > 1) {
+        b = (a * b);
+        a = (a - 1);
+    }
+    println(b);
+end
