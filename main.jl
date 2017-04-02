@@ -5,6 +5,8 @@ include("scan_analyse_action_G0.jl")
 include("scan_analyse_action_GPL.jl")
 
 
+
+
 spx = 0
 co = 0
 const Pilex = Array{Union{Int, Bool}}(50)
@@ -17,13 +19,18 @@ const Dict_NT = [:S,:N,:E,:T,:F]
 const Dict_T = Array{Symbol,1}(0)
 const Pile = Vector{PTR}(0)
 
+
+
 const scanIt = scanIterator(scan_G0(GPL))
 # println(scanIt)
 
+println("ok")
 
 print("\nanalyseG0 : ")
 if !analyse(A[1]) exit() end
 println("ok")
+
+
 
 # for i=6:length(A)
 #     println(Dict_NT[i])

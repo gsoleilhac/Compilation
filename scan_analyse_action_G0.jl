@@ -16,6 +16,7 @@ function scan_G0(ln::String)::Array{Tuple{Symbol, Int, enum_atomType, String}, 1
 
     # !!! Si on laisse passer un "\n" ici ça fait planter l'analyse (interprété comme un non terminal) ... !!!
     ln = replace(ln, '\n', "")
+    ln = replace(ln, '\t', "")
 
     cpt = 1
     N = length(ln)

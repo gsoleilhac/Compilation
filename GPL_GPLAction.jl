@@ -2,16 +2,21 @@ const GPL = "S -> 'begin'.DeclarVar.ListInstr.'end'#25,
 DeclarVar -> 'int'.DeclarVar2,
 DeclarVar2 -> 'IDENT'#1.[','.'IDENT'#1].';',
 ListInstr -> [Instr],
-Instr -> ('IDENT'#2.'='#3.Expr.';'#4) + 
+Instr -> ('IDENT'#2.'='#3.Expr.';'#4) +
         ('println'.'('.Expr.')'.';'#6) +
         ('while'.'('#7.Cond.')'#8.'{'.ListInstr.'}'#9) +
         ('if'.'('.Cond.')'#22.'{'.ListInstr.'}'.Else#24),
 Else -> (/'else'#23.'{'.ListInstr.'}'/),
-Expr -> Expr2.[OP.Expr#26] + 
-        '('.Expr.')'.[OP.Expr#26],
-Expr2 -> 'IDENT'#14 + 
+Expr -> Expr2.Exprprime,
+Exprprime -> '+'.Expr2#10.Exprprime +
+              ['-'.Expr2#11.Exprprime],
+Expr2 -> Expr3.Expr2prime,
+Expr2prime -> '*'.Expr3#12.Expr2prime +
+            ['/'.Expr3#13.Expr2prime],
+Expr3 -> 'IDENT'#14 + 
         'NUMBER'#15 +
-        'input()'#27,
+        'input()'#27 +
+        '('.Expr.')',
 OP -> '*'#12 + '/'#13 + '+'#10 + '-'#11,
 Cond -> Expr.CondSymbol.Expr#16,
 CondSymbol -> '>'#17 + '>='#18 + '<'#19 + '<='#20 + '=='#21,;"
@@ -55,13 +60,17 @@ function GPL_Action(act::Int)::Void
         co+=2
         Pcode[adresseJIF] = co+1
     elseif act == 10
-        push!(pileExt,ADD)
+        Pcode[co+1] = ADD
+        co+=1
     elseif act == 11
-        push!(pileExt,SUB)
+        Pcode[co+1] = SUB
+        co+=1
     elseif act == 12
-        push!(pileExt,MULT)
+        Pcode[co+1] = MULT
+        co+=1
     elseif act == 13
-        push!(pileExt,DIV)
+        Pcode[co+1] = DIV
+        co+=1
     elseif act == 14
         Pcode[co+1] = LDV
         Pcode[co+2] = findfirst(DicoVar, varname)
