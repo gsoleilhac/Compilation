@@ -8,8 +8,7 @@ end
 
 function interpret(x::Instructions)
     global spx, co
-    verbose = false
-    if verbose
+    if print_execution
         print(x)
         if x in [LDA, LDV, LDC, JMP, JIF]
             print(" ",Pcode[co+1])
@@ -100,9 +99,11 @@ function interpret(x::Instructions)
         co += 1
     elseif x==INC
         Pilex[Pilex[spx]] += 1
+        spx -= 1
         co += 1
     elseif x==DEC
         Pilex[Pilex[spx]] -= 1
+        spx -= 1
         co += 1
     elseif x==RD
 
@@ -113,7 +114,7 @@ function interpret(x::Instructions)
         spx += 1
         co += 1
     elseif x==WRT
-        print(Pilex)
+        print(Pilex[spx])
         spx-=1
         co += 1
     elseif x==WRTLN
@@ -128,5 +129,5 @@ function interpret(x::Instructions)
         return 0
     end
 
-    verbose && println(Pilex[1:spx])
+    print_execution && println(Pilex[1:spx])
 end

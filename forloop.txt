@@ -1,0 +1,6 @@
+begin
+    int a,b;
+    for (a = 10 ; (a >= 0) ; a--){
+    	println(a);
+    }
+end

@@ -71,8 +71,10 @@ end
 
 function analyseGPL(p::PTR,os="")::Bool
 
-    isa(p, atom) && println("$os$p")
-    !isa(p, atom) && println("$os$(ptrToString(p))")
+    if print_analyse_gpl
+        isa(p, atom) && println("$os$p")
+        !isa(p, atom) && println("$os$(ptrToString(p))")
+    end
 
     if isa(p, conc)
         return analyseGPL(p.left,os*"-|") && analyseGPL(p.right,os*"-|")
@@ -87,16 +89,22 @@ function analyseGPL(p::PTR,os="")::Bool
     elseif isa(p, atom)
         if p.atomType == TER
             symbole,str = get(scanItGPL)
-            println("SCANNER : ",symbole," - ",str)
+            if print_analyse_gpl
+                if symbole == :IDENT || symbole == :NUMBER
+                    println("$(os)SCANNER : ",symbole," - ",str)
+                else
+                    println("$(os)SCANNER : ",symbole)
+                end
+            end
             if p.COD == symbole
-                println("true")
+                print_analyse_gpl && println("$(os)true")
                 if p.action != 0
                     GPL_Action(p.action)
                 end
                 next(scanItGPL)
                 return true
             else 
-                println("false")
+                print_analyse_gpl && println("$(os)false")
                 return false
             end
         else

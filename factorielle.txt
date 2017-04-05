@@ -1,5 +1,5 @@
 begin
-    int a,b,c;
+    int a,b;
     a = input();
     b = 1;
     while (a > 1) {

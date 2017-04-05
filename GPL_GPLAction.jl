@@ -26,13 +26,15 @@ const GPL = "S -> 'begin'.DeclarVar.[Instr].'end'#25,
 DeclarVar -> 'int'.DeclarVar2,
 DeclarVar2 -> 'IDENT'#1.[','.'IDENT'#1].';',
 AFFouINCouDEC -> 'IDENT'#2.AFFouINCouDEC2,
-AFFouINCouDEC2 -> '='#3.Expr.';'#4 + 
-                    '++'.';'#28 + 
-                    '--'.';'#29,
-Instr -> AFFouINCouDEC + 
+AFFouINCouDEC2 -> '='#3.Expr#4 + 
+                    '++'#28 + 
+                    '--'#29,
+AFF -> 'IDENT'#2.'='#3.Expr#4,
+Instr -> AFFouINCouDEC.';' + 
         'println'.'('.Expr.')'.';'#6 +
-        'while'.'('#7.Cond.')'#8.'{'.Instr.[Instr].'}'#9 +
-        'if'.'('.Cond.')'#22.'{'.[Instr].'}'.Else#24,
+        'while'#7.Cond#8.'{'.Instr.[Instr].'}'#9 +
+        'if'.Cond#22.'{'.[Instr].'}'.Else#24 + 
+        'for'.'('.AFF.';'#7.Cond.';'#32.AFFouINCouDEC.')'#31.'{'.[Instr].'}'#30,
 Else -> (/'else'#23.'{'.[Instr].'}'/),
 Expr -> Expr2.Exprprime,
 Exprprime -> '+'.Expr2#10.Exprprime +
@@ -44,12 +46,13 @@ Expr3 -> 'IDENT'#14 +
         'NUMBER'#15 +
         'input()'#27 +
         '('.Expr.')',
-Cond -> Expr.CondSymbol.Expr#16,
+Cond -> '('.Expr.CondSymbol.Expr#16.')',
 CondSymbol -> '>'#17 + '>='#18 + '<'#19 + '<='#20 + '=='#21,;"
 
 function GPL_Action(act::Int)::Void
 
-    println("ACTION : ",act)
+    print_analyse_gpl && println("ACTION : ",act)
+    
     global co
 
     symbol,varname = get(scanItGPL)
@@ -143,6 +146,26 @@ function GPL_Action(act::Int)::Void
     elseif act == 29
         Pcode[co+1] = DEC
         co+=1
+    elseif act == 30
+        Pcode[co+1] = JMP
+        at_JIF = pop!(pileExt)
+        Pcode[co+2] = at_JIF + 3
+        co += 2
+        Pcode[at_JIF] = co + 1
+    elseif act == 31
+        Pcode[co+1] = JMP
+        at_JMP = pop!(pileExt)
+        TMP = pop!(pileExt)
+        Pcode[co+2] = pop!(pileExt)
+        co += 2
+        Pcode[at_JMP] = co + 1
+        push!(pileExt, TMP)
+    elseif act == 32
+        Pcode[co+1] = JIF
+        Pcode[co+3] = JMP
+        push!(pileExt, co+2)
+        push!(pileExt, co+4)
+        co += 4
     end
     return
 end

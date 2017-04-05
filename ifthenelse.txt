@@ -1,5 +1,5 @@
 begin
-    int a,b;
+    int a;
     a = input();
     a--;
     if (a < 10) {
