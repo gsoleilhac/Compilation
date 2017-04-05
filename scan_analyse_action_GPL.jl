@@ -45,7 +45,7 @@ function scan_GPL(ln::String)
             end
             push!(res, (:NUMBER, buffer))
         else 
-            error("Caractere $(Int(ln[cpt])) non reconnu")
+            error("Caractere $(ln[cpt]) ($(Int(ln[cpt]))) non reconnu")
         end
     end
     return res

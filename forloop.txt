@@ -1,6 +1,8 @@
 begin
     int a,b;
-    for (a = 10 ; (a >= 0) ; a--){
-    	println(a);
+    for (a = input() ; a >= 0 ; a--){
+    	if a == 2 * (a / 2){
+    		println(a);
+    	}
     }
 end

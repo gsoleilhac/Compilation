@@ -1,0 +1,19 @@
+begin
+    int a,res,i;
+
+    a = input();
+    res = 1;
+
+    if a == (a / 2) * 2 && ![a==2]{
+    	res = 0;
+    }
+    else
+    {
+	    for (i = 2 ; i*i<=a ; i++){
+	    	if a == (a / i) * i {
+	    		res = 0;
+	    	}
+	    }
+    }
+    println(res);
+end

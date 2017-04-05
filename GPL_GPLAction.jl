@@ -46,7 +46,11 @@ Expr3 -> 'IDENT'#14 +
         'NUMBER'#15 +
         'input()'#27 +
         '('.Expr.')',
-Cond -> '('.Expr.CondSymbol.Expr#16.')',
+Cond -> Cond2.Condprime,
+Condprime -> ['||'.Cond2#33.Condprime],
+Cond2 -> Cond3.Cond2prime,
+Cond2prime -> ['&&'.Cond3#34.Cond2prime],
+Cond3 -> Expr.CondSymbol.Expr#16 + '['.Cond.']' + '!'.'['.Cond.']'#35,
 CondSymbol -> '>'#17 + '>='#18 + '<'#19 + '<='#20 + '=='#21,;"
 
 function GPL_Action(act::Int)::Void
@@ -166,6 +170,15 @@ function GPL_Action(act::Int)::Void
         push!(pileExt, co+2)
         push!(pileExt, co+4)
         co += 4
+    elseif act == 33
+        Pcode[co+1] = OR
+        co += 1
+    elseif act == 34
+        Pcode[co+1] = AND
+        co += 1
+     elseif act == 35
+        Pcode[co+1] = NOT
+        co += 1
     end
     return
 end

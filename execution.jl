@@ -87,7 +87,7 @@ function interpret(x::Instructions)
         spx -= 1
         co += 1
     elseif x==DIV
-        Pilex[spx-1] = Pilex[spx-1] / Pilex[spx]
+        Pilex[spx-1] = Pilex[spx-1] ÷ Pilex[spx]
         spx -= 1
         co += 1
     elseif x==MULT

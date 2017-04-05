@@ -2,7 +2,7 @@ begin
     int a,b;
     a = input();
     b = 1;
-    while (a > 1) {
+    while a > 1 {
         b = (a * b);
         a = (a - 1);
     }

@@ -1,12 +1,14 @@
 begin
-    int a;
-    a = input();
-    a--;
-    if (a < 10) {
-    	println((2 * a));
+    int a,res,i;
+
+    a = input()
+    res = 1;
+    
+    for (i = 2 ; i*i<=a ; i++){
+    	if a / i == 0{
+    		res = 0;
+    	}
     }
-    else
-    {
-    	println(a);
-    }
+
+    println(res)
 end

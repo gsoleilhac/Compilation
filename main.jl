@@ -5,13 +5,13 @@ include("scan_analyse_action_G0.jl")
 include("scan_analyse_action_GPL.jl")
 
 print_analyse_gpl = false
-print_execution = true
+print_execution = false
 
 spx = 0
 co = 0
 
-const Pilex = Array{Union{Int, Bool}}(50)
-const Pcode = Array{Union{Instructions, Int}}(100)
+const Pilex = Array{Union{Int, Bool}}(500)
+const Pcode = Array{Union{Instructions, Int}}(500)
 const pileExt= Array{Union{Instructions, Int}}(0)
 const DicoVar = String[]
 
@@ -24,8 +24,8 @@ const scanIt = scanIterator(scan_G0(GPL))
 
 
 print("\nanalyseG0 : ")
-if !analyse(A[1]) exit() end
-println("ok")
+if !analyse(A[1]) println("fail") ; exit() end
+println("ok\n")
 
 
 
@@ -41,7 +41,7 @@ const  scanItGPL = scanIteratorGPL(scan_GPL(program))
 println(program,'\n')
 
 print("\nanalyseGPL : ")
-if !analyseGPL(A[6]) exit() end
+if !analyseGPL(A[6]) println("fail") ; exit() end
 println("ok")
 
 println("\nPcode : \n",Pcode[1:co],"\n")
