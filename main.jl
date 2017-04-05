@@ -2,7 +2,7 @@ include("GdG.jl")
 include("execution.jl")
 include("GPL_GPLAction.jl") #defines GPL and GPL_Action
 include("scan_analyse_action_G0.jl")
-include("scan_analyse_action_GPL.jl")
+include("scan_analyse_GPL.jl")
 
 print_analyse_gpl = false
 print_execution = false
