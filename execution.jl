@@ -99,18 +99,11 @@ function interpret(x::Instructions)
         Pilex[spx] *= -1
         co += 1
     elseif x==INC
-        Pilex[spx] += 1
+        Pilex[Pilex[spx]] += 1
         co += 1
     elseif x==DEC
-        Pilex[spx] -= 1
+        Pilex[Pilex[spx]] -= 1
         co += 1
-        Pilex[spx] = -Pilex[spx]
-        co += 1
-    elseif x==INC
-        Pilex[spx] += Pilex[spx]
-        co += 1
-    elseif x==DEC
-        Pilex[spx] -= Pilex[spx]
     elseif x==RD
 
     elseif x==RDLN

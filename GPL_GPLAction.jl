@@ -25,10 +25,14 @@
 const GPL = "S -> 'begin'.DeclarVar.[Instr].'end'#25,
 DeclarVar -> 'int'.DeclarVar2,
 DeclarVar2 -> 'IDENT'#1.[','.'IDENT'#1].';',
-Instr -> ('IDENT'#2.'='#3.Expr.';'#4) +
-        ('println'.'('.Expr.')'.';'#6) +
-        ('while'.'('#7.Cond.')'#8.'{'.Instr.[Instr].'}'#9) +
-        ('if'.'('.Cond.')'#22.'{'.[Instr].'}'.Else#24),
+AFFouINCouDEC -> 'IDENT'#2.AFFouINCouDEC2,
+AFFouINCouDEC2 -> '='#3.Expr.';'#4 + 
+                    '++'.';'#28 + 
+                    '--'.';'#29,
+Instr -> AFFouINCouDEC + 
+        'println'.'('.Expr.')'.';'#6 +
+        'while'.'('#7.Cond.')'#8.'{'.Instr.[Instr].'}'#9 +
+        'if'.'('.Cond.')'#22.'{'.[Instr].'}'.Else#24,
 Else -> (/'else'#23.'{'.[Instr].'}'/),
 Expr -> Expr2.Exprprime,
 Exprprime -> '+'.Expr2#10.Exprprime +
@@ -132,6 +136,12 @@ function GPL_Action(act::Int)::Void
         co+=1
     elseif act == 27
         Pcode[co+1] = RDLN
+        co+=1
+    elseif act == 28
+        Pcode[co+1] = INC
+        co+=1
+    elseif act == 29
+        Pcode[co+1] = DEC
         co+=1
     end
     return

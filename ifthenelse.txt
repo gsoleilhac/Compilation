@@ -1,6 +1,7 @@
 begin
     int a,b;
     a = input();
+    a--;
     if (a < 10) {
     	println((2 * a));
     }
