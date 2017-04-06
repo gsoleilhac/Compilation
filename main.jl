@@ -4,8 +4,8 @@ include("GPL_GPLAction.jl") #defines GPL and GPL_Action
 include("scan_analyse_action_G0.jl")
 include("scan_analyse_GPL.jl")
 
-print_analyse_gpl = false
-print_execution = false
+print_analyse_gpl = true
+print_execution = true
 
 spx = 0
 co = 0
@@ -34,6 +34,9 @@ println("ok\n")
 #     print_arbre(A[i])
 #     println()
 # end
+
+if length(ARGS) != 1 println("missing filename") ; exit() end
+
 
 program = readstring(ARGS[1])
 const  scanItGPL = scanIteratorGPL(scan_GPL(program))

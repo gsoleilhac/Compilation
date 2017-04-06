@@ -1,26 +1,3 @@
-####### TODO #######
-### 
-### 
-### facile : 
-###     Boucle for avec une syntaxe C
-###     Renuméroter les actions dans l'ordre ? osef un peu mais bon...
-### 
-### 
-### moyen : 
-###     !(condition)
-###     condition && condition
-###     condition || condition
-###
-###     parentheser les conditions via une seule regle plutot que forcer 'if'.'(' ...
-###     sans ça c'est chiant pour le !(condition)
-###
-### chaud :
-###     pouvoir gérer ou au moins print des String ?
-###     Faire des fonctions :D
-###
-### 
-
-
 
 const GPL = "S -> 'begin'.DeclarVar.[Instr].'end'#25,
 DeclarVar -> 'int'.DeclarVar2,
@@ -45,13 +22,15 @@ Expr2prime -> '*'.Expr3#12.Expr2prime +
 Expr3 -> 'IDENT'#14 + 
         'NUMBER'#15 +
         'input()'#27 +
-        '('.Expr.')',
+        '('.Expr.')', 
 Cond -> Cond2.Condprime,
 Condprime -> ['||'.Cond2#33.Condprime],
 Cond2 -> Cond3.Cond2prime,
 Cond2prime -> ['&&'.Cond3#34.Cond2prime],
 Cond3 -> Expr.CondSymbol.Expr#16 + '['.Cond.']' + '!'.'['.Cond.']'#35,
 CondSymbol -> '>'#17 + '>='#18 + '<'#19 + '<='#20 + '=='#21,;"
+
+
 
 function GPL_Action(act::Int)::Void
 
